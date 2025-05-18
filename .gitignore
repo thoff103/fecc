@@ -1,13 +1,21 @@
 junk.scala
 /*.png
 /resources
-.vscode
-.metals
-target
-project/project
-.bsp
-.bloop
 metals.sbt
 practice.scala
 /release
 /*.fecc
+# scala-cli, bloop, metals
+.bsp/
+.bloop/
+.metals/
+.scala-build/
+project/metals.sbt
+# sbt
+project/project/
+project/target/
+target/
+# vs code
+.vscode/
+# mac
+.DS_Store
