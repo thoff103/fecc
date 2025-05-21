@@ -244,6 +244,9 @@ object FireEmblemCharacterCreator extends Frame  {
 
     val HairTB = OptionToolbox(label_str = "Hair", search_word = "Hair", draw_priority = 2 )
 
+    val FaceRnd = OptionToolbox(label_str = "Face", search_word = "Face"
+                    , draw_priority = 1, pixel_parser = PixelParser.Type.Face )
+
 
 
     val Hair = ColorSelectDisplay(label_str = "Hair", Color(224, 216, 64, 255)
@@ -291,7 +294,7 @@ object FireEmblemCharacterCreator extends Frame  {
     contents = Body 
 
     font = Font("Calibri", Font.Bold, 12)
-    title = "Fire Emblem Character Creator v3.1.0"
+    title = "Fire Emblem Character Creator"
 
 
     private val __color_mapping: Seq[(String, ColorSelectDisplay)] = 

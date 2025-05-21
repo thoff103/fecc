@@ -11,6 +11,7 @@ import java.awt.Color
 import scala.swing.Action
 import FireEmblemCharacterCreator.draw_images
 import java.util.regex.Pattern
+import scala.util.Random
 
 object Toolbox {
   
@@ -30,18 +31,31 @@ object Toolbox {
         private val selector = ComboBox(files.map(_.getName.replaceAllLiterally("_"+full_search, "")))
         private val pieceHeight = 30
         selector.preferredSize = Dimension(ToolboxWidth,pieceHeight)
+        // Label button
         private val lblbtn = Button(label) {  
             PreviewSelector.populate(this)
         }
         lblbtn.preferredSize = Dimension(ToolboxWidth,pieceHeight)
+        // Random button
+        val rand = new scala .util.Random
+        private val rndbtn = Button("Random "+label) {
+            PreviewSelector.populate(this)
+            val randInt = rand.nextInt(files.length)
+            println("PICK A RANDOM NUMBER!: "+randInt+"/"+files.length)
+            println(files(randInt))
+            set_by_index(randInt)
+
+        }
+        rndbtn.preferredSize = Dimension(ToolboxWidth,pieceHeight)
 
         // val children = Seq( ElemLiteral(new Label(label) { xLayoutAlignment = 0.5; preferredSize = Dimension(ToolboxWidth,pieceHeight) })
         // , ElemLiteral(selector, 0, pieceHeight) )
 
         val children = Seq( ElemLiteral(lblbtn)
-        , if horizontal == false then ElemLiteral(selector, rely=pieceHeight) else ElemLiteral(selector, relx=ToolboxWidth ) )
+        , if horizontal == false then ElemLiteral(selector, rely=pieceHeight) else ElemLiteral(selector, relx=ToolboxWidth )
+        , if horizontal == false then ElemLiteral(rndbtn, rely=pieceHeight*2) else ElemLiteral(rndbtn, relx=ToolboxWidth ) )
 
-        preferredSize = Dimension(ToolboxWidth, if horizontal == false then pieceHeight*2 else pieceHeight)
+        preferredSize = Dimension(ToolboxWidth, if horizontal == false then pieceHeight*3 else pieceHeight)
 
         listenTo(selector.selection)
         reactions += {
