@@ -41,8 +41,8 @@ object Toolbox {
         private val rndbtn = Button("Random "+label) {
             PreviewSelector.populate(this)
             val randInt = rand.nextInt(files.length)
-            println("PICK A RANDOM NUMBER!: "+randInt+"/"+files.length)
-            println(files(randInt))
+            //println("PICK A RANDOM NUMBER!: "+randInt+"/"+files.length)
+            //println(files(randInt))
             set_by_index(randInt)
 
         }

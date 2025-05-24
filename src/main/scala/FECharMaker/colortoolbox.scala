@@ -5,8 +5,11 @@ import java.awt.Color
 import scala.swing.Action
 import scala.swing.Button
 import scala.collection.MapView
+import FireEmblemCharacterCreator.draw_images
 import FECharMaker.ColorDialog
 import java.util.regex.Pattern
+import scala.util.Random
+
 
 object ColorToolbox {
 
@@ -17,8 +20,10 @@ object ColorToolbox {
             + Integer.toHexString(color.getBlue())
     }
 
-    private val ColorLabelPrefSize = Dimension(50,30)
-    private val ButtonPrefSize = Dimension(ColorLabelPrefSize.width * 3, 50)
+    //private val ColorLabelPrefSize = Dimension(50,30)
+    //private val ButtonPrefSize = Dimension(ColorLabelPrefSize.width * 3, 50)
+    private val ColorLabelPrefSize = Dimension(40,30)
+    private val ButtonPrefSize = Dimension(ColorLabelPrefSize.width * 4, 50)
 
 
     class ColorShadeButton( csd: ColorSelectDisplay, val red_index: Int ) extends Button with Elem {
@@ -47,7 +52,12 @@ object ColorToolbox {
 
         button.xLayoutAlignment = 0.5
 
-
+        val rand = new scala .util.Random
+        private val rnd_colorbtn = Button("R") {
+            // Using "prefabs" -TODO: potentially add other colors
+            set_auto_palette(prefabs(rand.nextInt(prefabs.length)))
+            draw_images()
+        }
             
 
         private val shade_vis = (for
@@ -61,9 +71,11 @@ object ColorToolbox {
 
         
         
-        preferredSize = new Dimension( ColorLabelPrefSize.width * shade_vis.length , ButtonPrefSize.height + ColorLabelPrefSize.height )
+        preferredSize = new Dimension( ColorLabelPrefSize.width * (shade_vis.length+1) , ButtonPrefSize.height + ColorLabelPrefSize.height )
         button.preferredSize = Dimension( preferredSize.width, ButtonPrefSize.height)
-        override val children = ElemLiteral(button) +: shade_vis
+        rnd_colorbtn.preferredSize = Dimension( ColorLabelPrefSize.width, ColorLabelPrefSize.height)
+        //override val children = ElemLiteral(button) +: shade_vis 
+        override val children = ElemLiteral(button) +: shade_vis :+ ElemLiteral(rnd_colorbtn, relx=shade_vis.length * ColorLabelPrefSize.width, rely=ButtonPrefSize.height)
 
         private def auto_shades: MapView[Int, Color] =
             ColorIndices.to_shades( cidxs, color )
